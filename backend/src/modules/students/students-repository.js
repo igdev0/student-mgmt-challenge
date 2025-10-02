@@ -29,7 +29,7 @@ const countStudents = async (payload) => {
     }
 
     if(search) {
-        query += `AND (t1.name ILIKE $${queryParams.length} OR t1.email ILIKE $${queryParams.length + 1})`;
+        query += `AND (t1.name ILIKE $${queryParams.length + 1} OR t1.email ILIKE $${queryParams.length + 1})`;
         queryParams.push(`%${search}%`);
     }
 
@@ -68,14 +68,10 @@ const findAllStudents = async (payload) => {
     }
 
     if(search) {
-        query += `AND (t1.name ILIKE $${queryParams.length} OR t1.email ILIKE $${queryParams.length + 1})`;
+        query += `AND (t1.name ILIKE $${queryParams.length + 1} OR t1.email ILIKE $${queryParams.length + 1})`;
         queryParams.push(`%${search}%`);
     }
 
-
-    // Add LIMIT
-    //
-    // // Add OFFSET
     query += ' ORDER BY t1.id';
 
     const offset = (page - 1) * limit;
