@@ -38,7 +38,6 @@ const handleAddStudent = asyncHandler(async (req, res) => {
         guardianName: guardian_name,
         guardianPhone: guardian_phone,
         relationOfGuardian: relation_of_guardian,
-        systemAccess: system_access,
         dob,
         admissionDate: admission_dt,
     } = req.body;
