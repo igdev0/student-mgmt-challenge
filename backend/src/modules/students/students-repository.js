@@ -139,6 +139,21 @@ const findStudentToSetStatus = async ({userId, reviewerId, status}) => {
     return rowCount
 }
 
+const deleteStudent = async (id) => {
+    // 1. Delete profiles related to user first.
+    await processDBRequest({
+        query: `DELETE FROM user_profiles WHERE user_id = $1`,
+        queryParams: [id]
+    });
+
+    // todo: Implement delete method for each table where relation with user is required.
+    // for this example I will keep it simple.
+    const query = `DELETE FROM users WHERE id = $1 RETURNING *`;
+    const queryParams = [id];
+    const {rows} = await processDBRequest({query, queryParams});
+    return rows[0];
+}
+
 const findStudentToUpdate = async (paylaod) => {
     const {basicDetails: {name, email}, id} = paylaod;
     const currentDate = new Date();
@@ -161,5 +176,6 @@ module.exports = {
     addOrUpdateStudent,
     findStudentDetail,
     findStudentToSetStatus,
-    findStudentToUpdate
+    findStudentToUpdate,
+    deleteStudent
 };

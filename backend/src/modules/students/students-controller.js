@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const {
     getAllStudents,
     addNewStudent,
+    deleteStudentService,
     getStudentDetail,
     setStudentStatus,
     updateStudent,
@@ -19,7 +20,7 @@ const handleGetAllStudents = asyncHandler(async (req, res) => {
     const payload = {className, section, limit, page, search};
     const students = await getAllStudents(payload);
     const totalRecords = await countAllStudents(payload);
-    res.json({ page, limit, pagesCount: Math.ceil(totalRecords / limit), data: students});
+    res.json({page, limit, pagesCount: Math.ceil(totalRecords / limit), data: students});
 });
 
 const handleAddStudent = asyncHandler(async (req, res) => {
@@ -127,10 +128,16 @@ const handleStudentStatus = asyncHandler(async (req, res) => {
     res.json(message);
 });
 
+const handleDeleteStudent = asyncHandler(async (req, res) => {
+    await deleteStudentService(req.params.id);
+    res.json({message: "Student deleted successfully"});
+})
+
 module.exports = {
     handleGetAllStudents,
     handleGetStudentDetail,
     handleAddStudent,
     handleStudentStatus,
     handleUpdateStudent,
+    handleDeleteStudent,
 };

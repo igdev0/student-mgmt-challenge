@@ -3,6 +3,7 @@ const {
     findAllStudents,
     findStudentDetail,
     findStudentToSetStatus,
+    deleteStudent,
     addOrUpdateStudent, countStudents
 } = require("./students-repository");
 const {studentSchema} = require("./students-schema");
@@ -95,11 +96,19 @@ const setStudentStatus = async ({userId, reviewerId, status}) => {
     return {message: "Student status changed successfully"};
 }
 
+const deleteStudentService = async (id) => {
+    const deleted =  await deleteStudent(id);
+    if(!deleted) {
+        throw new ApiError(404, `Student not found`);
+    }
+}
+
 module.exports = {
     getAllStudents,
     getStudentDetail,
     addNewStudent,
     setStudentStatus,
+    deleteStudentService,
     updateStudent,
     countAllStudents,
 };
