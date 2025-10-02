@@ -41,6 +41,7 @@ export const AddStudent = () => {
 
       const payload = {
         ...rest,
+        roll: Number(rest.roll),
         dob: getFormattedDate(dob, API_DATE_FORMAT),
         admissionDate: getFormattedDate(admissionDate, API_DATE_FORMAT)
       };
