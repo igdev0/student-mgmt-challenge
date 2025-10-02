@@ -1,10 +1,4 @@
 const z = require("zod");
-const studentFilterSchema = z.object({
-    class: z.string().optional(),
-    section: z.string().optional(),
-    name: z.string().optional(),
-    roll: z.number().optional()
-});
 
 const basicInfoSchema = z.object({
     name: z.string().min(1, 'Name is required'),
@@ -14,7 +8,7 @@ const basicInfoSchema = z.object({
     email: z.string().min(1, 'Email is required')
 });
 
-const AcademicInfoSchema = z.object({
+const academicInfoSchema = z.object({
     class: z.string().min(1, 'Class is required'),
     section: z.string(),
     roll: z.number().min(1, 'Roll is required'),
@@ -37,15 +31,17 @@ const parentsAndGuardianInfoSchema = z.object({
 });
 
 
-const studentSchema = basicInfoSchema.extend(AcademicInfoSchema.shape)
+const createStudentSchema = basicInfoSchema.extend(academicInfoSchema.shape)
     .extend(addressInfoSchema.shape)
     .extend(parentsAndGuardianInfoSchema.shape)
 
+const updateStudentSchema = createStudentSchema.partial();
+
 module.exports = {
-    studentFilterSchema,
     basicInfoSchema,
-    AcademicInfoSchema,
+    academicInfoSchema,
     addressInfoSchema,
     parentsAndGuardianInfoSchema,
-    studentSchema
+    createStudentSchema,
+    updateStudentSchema
 };

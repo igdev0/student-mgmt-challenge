@@ -6,7 +6,7 @@ const {
     deleteStudent,
     addOrUpdateStudent, countStudents
 } = require("./students-repository");
-const {studentSchema} = require("./students-schema");
+const {createStudentSchema, updateStudentSchema} = require("./students-schema");
 const {findUserById} = require("../../shared/repository");
 
 const checkStudentId = async (id) => {
@@ -49,7 +49,7 @@ const addNewStudent = async (payload) => {
     const ADD_STUDENT_AND_EMAIL_SEND_SUCCESS = "Student added and verification email sent successfully.";
     const ADD_STUDENT_AND_BUT_EMAIL_SEND_FAIL = "Student added, but failed to send verification email.";
     try {
-        studentSchema.parse(payload);
+        createStudentSchema.parse(payload);
     } catch (error) {
         throw new ApiError(400, JSON.parse(error.message).map(item => `${item.path[0]}: "${item.message}"`));
     }
@@ -73,7 +73,7 @@ const addNewStudent = async (payload) => {
 
 const updateStudent = async (payload) => {
     try {
-        studentSchema.parse(payload);
+        updateStudentSchema.parse(payload);
     } catch (error) {
         throw new ApiError(400, error.message);
     }
