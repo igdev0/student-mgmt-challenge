@@ -15,9 +15,11 @@ const handleGetAllStudents = asyncHandler(async (req, res) => {
         limit = 10,
         search,
         class: className,
+        name,
+        roll,
         section
     } = req.query;
-    const payload = {className, section, limit, page, search};
+    const payload = {className, section, limit, page, search, name, roll};
     const students = await getAllStudents(payload);
     const totalRecords = await countAllStudents(payload);
     res.json({page, limit, pagesCount: Math.ceil(totalRecords / limit), data: students});
